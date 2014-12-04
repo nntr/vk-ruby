@@ -42,23 +42,23 @@ module VK::Auth
   #     type: :client,
   #     app_id: 123,
   #     settings: 'friends,audio',
-  #     version: '5.20',
+  #     version: '5.26',
   #     redirect_uri: 'https://example.com/',
   #     display: :mobile
   #   })
   #
-  #   #=> "https://oauth.vk.com/authorize?client_id=123&scope=friends,audio&redirect_uri=https://example.com/&display=mobile&response_type=token&v=5.20"
+  #   #=> "https://oauth.vk.com/authorize?client_id=123&scope=friends,audio&redirect_uri=https://example.com/&display=mobile&response_type=token&v=5.26"
   #
   # @example Get serverside authorization URL (see {https://vk.com/dev/auth_sites})
   #   application.authorization_url({
   #     type: :site,
   #     app_id: 123,
   #     settings: 'friends,audio',
-  #     version: '5.20',
+  #     version: '5.26',
   #     redirect_uri: 'https://example.com/'
   #   })
   #
-  #   #=> "https://oauth.vk.com/authorize?client_id=123&scope=friends,audio&redirect_uri=https://example.com/&response_type=token&v=5.20"
+  #   #=> "https://oauth.vk.com/authorize?client_id=123&scope=friends,audio&redirect_uri=https://example.com/&response_type=token&v=5.26"
 
   def authorization_url(options)
     params = VK::AuthParams.new(config, options)
@@ -175,7 +175,7 @@ module VK::Auth
     params.check! :app_id, :settings, :login, :password
 
     url = authorization_url(app_id: params.app_id, settings: params.settings, type: :client) << '&revoke=1'
-    
+
     browser = VK::FakeBrowser.new
     browser.sign_in! url, params.login, params.password
     sleep 1

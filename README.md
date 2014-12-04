@@ -35,7 +35,7 @@ __VK-RUBY__ has many configuration parameters, they are passed in when creating 
 Complete list, see the [configuration](#configuration) section.
 
 ```.ruby
-app = VK::Application.new(app_id: 1, version: '5.20', access_token: '[TOKEN]')
+app = VK::Application.new(app_id: 1, version: '5.26', access_token: '[TOKEN]')
 ```
 
 ### API method calling
@@ -145,11 +145,11 @@ app.authorization_url({
   type: :site,
   app_id: 123,
   settings: 'friends,audio',
-  version: '5.20',
+  version: '5.26',
   redirect_uri: 'https://example.com/'
 })
 
-#=> "https://oauth.vk.com/authorize?client_id=123&scope=friends,audio&redirect_uri=https://example.com/&response_type=token&v=5.20"
+#=> "https://oauth.vk.com/authorize?client_id=123&scope=friends,audio&redirect_uri=https://example.com/&response_type=token&v=5.26"
 ```
 
 Once user permit the to access their data, on specified `:redirect_url` come __GET__ request with `code` parameter, which is used to obtain an `access_token`.
@@ -213,7 +213,7 @@ Below are all the configuration keys for __VK-RUBY__.
 | :------------------ |:------------------| ----------:|
 | :app_id             | Application ID | `nil` |
 | :app_secret         | Application secret | `nil` |
-| :version            | API version  | `'5.20'` |
+| :version            | API version  | `'5.26'` |
 | :redirect_uri       | Application redirect URL | `nil` |
 | :settings           | Application settings | `'notify,friends,offline'` |
 | :access_token       | Access token | `nil` |

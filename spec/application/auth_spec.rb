@@ -1,7 +1,7 @@
 require 'helpers'
 
 describe VK::Auth, type: :application do
-  let(:options) {{ 
+  let(:options) {{
     app_id: :test_id,
     app_secret: :test_secret,
     access_token: :test_token,
@@ -18,7 +18,7 @@ describe VK::Auth, type: :application do
         "client_secret"=>"test_secret",
         "code"=> code,
         "redirect_uri" => '--',
-        "v" => "5.20"
+        "v" => "5.26"
       }
     }
 
@@ -32,7 +32,7 @@ describe VK::Auth, type: :application do
       "client_secret"=>"test_secret",
       "grant_type"=>"client_credentials"
     }}
-    
+
     it { expect{ subject.server_auth }.to_not raise_error }
     it { subject.server_auth.should eq(result) }
   end

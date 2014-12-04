@@ -5,7 +5,7 @@
 class VK::Config < Faraday::Options.new(:app_id, :app_secret, :version, :redirect_uri, :settings,
                                       :access_token, :verb, :host, :proxy, :ssl, :timeout,
                                       :open_timeout, :middlewares, :parallel_manager)
-  
+
   # @!attribute [rw] app_id
   #   @return [String] application ID
   #
@@ -45,7 +45,7 @@ class VK::Config < Faraday::Options.new(:app_id, :app_secret, :version, :redirec
   # @!attribute [rw] middlewares
   #   @return [Proc] Faraday middlewares stack (see {https://github.com/lostisland/faraday})
   #
-  # @!attribute [rw] parallel_manager 
+  # @!attribute [rw] parallel_manager
   #   @return [Faraday::Adapter::EMHttp::Manager|Faraday::Adapter::EMSynchrony::ParallelManager] manager that this connection's adapter uses (see {https://github.com/lostisland/faraday})
 
   alias v version
@@ -62,7 +62,7 @@ class VK::Config < Faraday::Options.new(:app_id, :app_secret, :version, :redirec
 
   DEFAULT = {
     settings: 'notify,friends,offline',
-    version: '5.20',
+    version: '5.26',
     host: 'https://api.vk.com',
     verb: :post,
     timeout: 10,
@@ -97,13 +97,13 @@ class VK::Config < Faraday::Options.new(:app_id, :app_secret, :version, :redirec
     self.proxy = Faraday::ProxyOptions.from(self.proxy) if self.proxy
     self.ssl = Faraday::SSLOptions.from(self.ssl) if self.ssl
     self.middlewares ||= DEFAULT_STACK
-    
+
     yield self if block_given?
   end
 
   def merge!(params)
     params = params.dup
-    
+
     if ssl_options = params.delete(:ssl)
       self.ssl = self.ssl ? self.ssl.merge!(ssl_options) : Faraday::SSLOptions.from(ssl_options)
     end
