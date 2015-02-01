@@ -176,7 +176,7 @@ module VK::Auth
 
     url = authorization_url(app_id: params.app_id, settings: params.settings, type: :client) << '&revoke=1'
 
-    browser = VK::FakeBrowser.new
+    browser = VK::FakeBrowser.new(config)
     browser.sign_in! url, params.login, params.password
     sleep 1
     browser.authorize!

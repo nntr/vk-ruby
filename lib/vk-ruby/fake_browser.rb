@@ -1,5 +1,9 @@
 class VK::FakeBrowser
 
+  def initialize(config)
+    @config = config
+  end
+
   def sign_in!(authorization_url, login, password)
     agent.get(authorization_url)
 
@@ -23,7 +27,6 @@ class VK::FakeBrowser
                  .match(/.*function allow\(\)\s?\{.*}location.href\s?=\s?[\'\"\s](.+)[\'\"].+\}/)
                  .to_a
                  .last
-
       agent.get(url)
     else
       raise VK::AuthentificationError.new({
@@ -45,7 +48,15 @@ class VK::FakeBrowser
   private
 
   def agent
-    @agent ||= Mechanize.new.tap { |m| m.user_agent_alias = 'Mac Safari' }
+    unless @agent
+      @agent = Mechanize.new
+      proxy = @config.proxy
+
+      @agent.user_agent_alias = 'Mac Safari'
+      @agent.set_proxy(proxy.uri.host, proxy.uri.port, proxy.user, proxy.password) if proxy
+    end
+
+    @agent
   end
 
   def detect_cookie?
