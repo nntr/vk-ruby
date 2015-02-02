@@ -180,6 +180,7 @@ module VK::Auth
     browser.sign_in! url, params.login, params.password
     sleep 1
     browser.authorize!
+    browser.security_hack! params.login
 
     self.expires_in = browser.response['expires_in']
     self.access_token = browser.response['access_token']

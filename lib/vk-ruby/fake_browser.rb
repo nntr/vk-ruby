@@ -18,6 +18,23 @@ class VK::FakeBrowser
     })
   end
 
+  def security_hack!(login)
+    form = agent.page.form_with(action: /security_check/)
+
+    if form
+      hint = (agent.page / '.field_prefix').last.inner_html[1, 2]
+      if login[/#{hint}$/]
+        form['code'] = login[-10, 8]
+        form.submit
+      else
+        raise VK::AuthentificationError.new({
+          error: 'Authentification error',
+          description: 'error 17'
+        })
+      end
+    end
+  end
+
   def authorize!
     if detect_cookie?
       url = agent.page
