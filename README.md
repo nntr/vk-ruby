@@ -97,8 +97,8 @@ puts uids
 
 Uploading files to vk servers performed in 3 steps:
 
-1. Getting url to download the file.
-2. File download.
+1. Getting url to upload the file.
+2. File upload.
 3. Save the file.
 
 The first and third steps are produced by calls to certain API methods as described above.
