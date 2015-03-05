@@ -16,3 +16,4 @@ spec/support/credentials.yml
 spec/support/mechanize.log
 .vk.yml
 Gemfile.lock
+.idea
