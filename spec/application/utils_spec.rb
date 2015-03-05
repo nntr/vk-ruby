@@ -1,7 +1,7 @@
 require 'helpers'
 
 describe VK::Utils do
-  
+
   describe '.camelize' do
     it { expect(VK::Utils.camelize('get_profiles')).to eq('getProfiles') }
     it { expect(VK::Utils.camelize('is_app_user')).to eq('isAppUser') }
@@ -57,12 +57,12 @@ describe VK::Utils do
 
     let(:result) { VK::Utils.symbolize(object) }
 
-    it do 
+    it do
       expect(result).to eq({
-        :a => 1, 
-        :"1" => "2", 
-        :c => :"3", 
-        :d => [1, :"2", :"3"], 
+        :a => 1,
+        :"1" => "2",
+        :c => :"3",
+        :d => [1, :"2", :"3"],
         :e=> {
           :f => 1,
           :g => "2",
@@ -75,10 +75,10 @@ describe VK::Utils do
 
   describe '.stringify' do
     let(:object) {{
-      :a => 1, 
-      :"1" => "2", 
-      :c => :"3", 
-      :d => [1, :"2", :"3"], 
+      :a => 1,
+      :"1" => "2",
+      :c => :"3",
+      :d => [1, :"2", :"3"],
       :e=> {
         :f => 1,
         :g => "2",
@@ -89,7 +89,7 @@ describe VK::Utils do
 
     let(:result) { VK::Utils.stringify(object) }
 
-    it do 
+    it do
       expect(result).to eq({
         'a' => 1,
         '1' => '2',
@@ -118,13 +118,35 @@ describe VK::Utils do
 
     let(:result) { VK::Utils.compact(object) }
 
-    it do 
+    it do
       expect(result).to eq({
         a: 1,
         c: {
           d: 2,
           f: [3, :g]
         }
+      })
+    end
+  end
+
+  describe '.stringify_arrays' do
+    let(:params) {
+      {
+        a: 1,
+        b: ['2', '3', '4'],
+        c: nil,
+        d: ['1', '2', nil]
+      }
+    }
+
+    let(:result) { VK::Utils.stringify_arrays(params) }
+
+    it do
+      expect(result).to eq({
+        a: 1,
+        b: '2,3,4',
+        c: nil,
+        d: '1,2'
       })
     end
   end

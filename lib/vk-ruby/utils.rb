@@ -3,7 +3,7 @@
 module VK::Utils
 
   # Get real API method name
-  # 
+  #
   # @example Camelize API method
   #   VK::Utils.camelize('get_profiles') #=> 'getProfiles'
 
@@ -74,5 +74,12 @@ module VK::Utils
       object
     end
   end
-  
+
+  # @param [Hash] hash with arrays as values { ['1','2','3'], '4' }
+  # @return [Hash] hash with stringified values { '1,2,3', '4' }
+  def self.stringify_arrays(params, separator = ',')
+    changed_params = Hash[params.select { |k,v| v.is_a?(Array) }.map {|k,v| [k, v.compact.join(separator)]}]
+    params.merge(changed_params)
+  end
+
 end

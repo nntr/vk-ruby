@@ -111,7 +111,7 @@ class VK::Config < Faraday::Options.new(:app_id, :app_secret, :version, :redirec
     if proxy_options = params.delete(:proxy)
       self.proxy = self.proxy ? self.proxy.merge!(proxy_options) : Faraday::ProxyOptions.from(proxy_options)
     end
-
+    params = VK::Utils.stringify_arrays(params)
     params.each { |k,v| send("#{k}=", v) if respond_to?("#{k}=") }
   end
 

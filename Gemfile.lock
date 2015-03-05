@@ -1,12 +1,12 @@
 PATH
   remote: .
   specs:
-    vk-ruby (1.0.1)
+    vk-ruby (1.0.2)
       docopt (~> 0.5, >= 0.5.0)
       faraday (~> 0.9, >= 0.9.0)
       faraday_middleware (~> 0.9, >= 0.9.1)
       highline (~> 1.6, >= 1.6.21)
-      mechanize (~> 2.7, >= 2.7.3)
+      mechanize (~> 2.7, >= 2.7)
       multi_json (~> 1.10.0, >= 1.10.1)
 
 GEM
