@@ -77,7 +77,7 @@ manager = Typhoeus::Hydra.new(max_concurrency: 10) # (200 is default)
 
 uids = { 1 => {}, 2 => {}, 3 => {}}
 
-app.in_parallel(manager) do 
+app.in_parallel(manager) do
   uids.each do |uid,_|
     app.users.get(user_ids: uid).each do |user|
       uids[user["id"]] = user
@@ -85,10 +85,10 @@ app.in_parallel(manager) do
   end
 end
 
-puts uids 
+puts uids
 #=> {
-#  1 => {"id"=>1, "first_name"=>"Павел", "last_name"=>"Дуров"}, 
-#  2 => {"id"=>2, "first_name"=>"Александра", "last_name"=>"Владимирова", "hidden"=>1}, 
+#  1 => {"id"=>1, "first_name"=>"Павел", "last_name"=>"Дуров"},
+#  2 => {"id"=>2, "first_name"=>"Александра", "last_name"=>"Владимирова", "hidden"=>1},
 #  3 => {"id"=>3, "first_name"=>"DELETED", "last_name"=>"", "deactivated"=>"deleted"}
 #}
 ```
@@ -110,7 +110,7 @@ When you call the upload also need to specify the mime type file.
 app.upload(
   'http://example.vk.com/path',{
     file1: ['/path/to/file1.jpg', 'image/jpeg'],
-    file2: [File.open('/path/to/file2.png'), 'image/png', '/path/to/file2.png'] 
+    file2: [File.open('/path/to/file2.png'), 'image/png', '/path/to/file2.png']
 })
 ```
 
@@ -126,14 +126,14 @@ app.upload(
 
 ### Authorization
 
-[VK](vk.com) has several types of applications and several types of authorization. 
+[VK](vk.com) has several types of applications and several types of authorization.
 They are different ways of authorization and access rights, more details refer to the [documentation](https://vk.com/dev/authentication).
 
 #### Site
 
 Site authorization process consists of 4 steps:
 
-1. Opening the browser to authenticate the user on the __VK__ 
+1. Opening the browser to authenticate the user on the __VK__
 2. Permit the user to access their data
 3. Transfer site value code for the access key
 4. Preparation of the application server access key `access_token` to access the __VK API__
@@ -170,7 +170,7 @@ app.server_auth(app_id: '[APP_ID]', app_secret: '[SECRET]') #=> { "access_token"
 
 __VK__ have a client authentication method, it implies a use of using a browser on the client (for example, `UIWebView` component when creating applications for __iOS__). In __RUBY__ we can not afford it, and so we use the [Mechanize](https://rubygems.org/gems/mechanize). Most likely it is contrary to the rules of use API, so be careful ;-)
 
-__VK__ implies that the authorization process will consist of three steps: 
+__VK__ implies that the authorization process will consist of three steps:
 
 - Opening the browser to authenticate the user on the site __VK__
 - Permit the user to access their data
@@ -184,7 +184,7 @@ app.client_auth(login: '[LOGIN]', password: '[PASSWORD]') #=> { "access_token" :
 
 ### Configuration
 
-__VK-RUBY__ has a large number of configuration attributes. 
+__VK-RUBY__ has a large number of configuration attributes.
 You can pass them when you create the application, and the method call.
 
 ```ruby
@@ -230,7 +230,7 @@ Below are all the configuration keys for __VK-RUBY__.
 
 |         Name        |            Default          |
 | :------------------ | ---------------------------:|
-| :verify             | `true`                      |    
+| :verify             | `true`                      |
 | :verify_mode        | `OpenSSL::SSL::VERIFY_NONE` |
 | :ca_file            | nil                         |
 | :ca_path            | nil                         |
@@ -248,7 +248,7 @@ More information on configuring ssl documentation [faraday](https://github.com/l
 
 |         Name        |  Default  |
 | :------------------ | ---------:|
-| :uri                | nil       |    
+| :uri                | nil       |
 | :user               | nil       |
 | :password           | nil       |
 
@@ -262,11 +262,11 @@ It is an __HTTP__ client lib that provides a common interface over many adapters
 
 #### Default stack
 
-This stack consists of standard `:multipart`,`:url_encoded`, `:json` middlewares, details of which are looking at [here] (https://github.com/lostisland/faraday#advanced-middleware-usage). 
+This stack consists of standard `:multipart`,`:url_encoded`, `:json` middlewares, details of which are looking at [here] (https://github.com/lostisland/faraday#advanced-middleware-usage).
 
-Are also used: 
+Are also used:
 
-- `:http_errors` throws an exception if the __HTTP__ status header is different from the 200 
+- `:http_errors` throws an exception if the __HTTP__ status header is different from the 200
 - `:api_errors` throws an exception if the server response contains the __API__ error
 
 And here is set on the default HTTP adapter (`Net::HTTP`).
@@ -294,9 +294,11 @@ app.middlewares = proc do |faraday|
                           interval: 0.3,
                           interval_randomness: 0.5,
                           backoff_factor: 2,
-                          exceptions: [VK::ApiException,
-                                       VK::BadResponseException,
-                                       Faraday::TimeoutError]
+                          exceptions: [VK::APIError,
+                                       VK::BadResponse,
+                                       Faraday::TimeoutError,
+                                       Faraday::ConnectionFailed],
+                          retry_if: lambda { |env, exception| true }
 
   faraday.response :api_errors
   faraday.response :json, content_type: /\bjson$/
@@ -326,5 +328,5 @@ Read more [middleware usage](https://github.com/lostisland/faraday#advanced-midd
 
 ## Copyright
 
-Copyright (c) 2014 [Andrew Zinenko](http://izinenko.ru). 
+Copyright (c) 2014 [Andrew Zinenko](http://izinenko.ru).
 See LICENSE.txt for further details.
