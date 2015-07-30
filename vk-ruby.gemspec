@@ -51,7 +51,7 @@ THANKS
 
   gem.add_runtime_dependency 'faraday', '~> 0.9',  '>= 0.9.0'
   gem.add_runtime_dependency 'faraday_middleware', '~> 0.9',    '>= 0.9.1'
-  gem.add_runtime_dependency 'multi_json',         '~> 1.10.0', '>= 1.10.1'
+  gem.add_runtime_dependency 'multi_json',         '>= 1.10.1'
   gem.add_runtime_dependency 'jruby-openssl',      '>= 0.7.7'    if RUBY_PLATFORM == 'java'
   gem.add_runtime_dependency 'mechanize','~> 2.7', '>= 2.7'
   gem.add_runtime_dependency 'docopt',   '~> 0.5', '>= 0.5.0'
