@@ -41,7 +41,7 @@ class VK::FakeBrowser
                  .body
                  .gsub("\n",'')
                  .gsub("  ",'')
-                 .match(/.*function allow\(\)\s?\{.*}location.href\s?=\s?[\'\"\s](.+)[\'\"].+\}/)
+                 .match(/.*function allow\(\)\s?\{.*}location.href\s?=\s?[\'\"\s](.+)[\'\"]\+addr/)
                  .to_a
                  .last
       agent.get(url)
